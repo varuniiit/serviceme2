@@ -128,12 +128,9 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 			query.whereEqualTo("installationId", database.getInstallationId());
 			parsePush.setQuery(query);
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("customername", database.getCustomerName());
-			jsonObject.put("timetoservice", database.getTimeToService());
-			jsonObject
-					.put("locationtoservice", database.getLocationToService());
+			jsonObject.put("providername", "Jhon");
 			jsonObject.put("requestid", database.getRequestId());
-			jsonObject.put("messagetype", "accept");
+			jsonObject.put("messagetype", "request");
 			jsonObject.put("installationid", database.getInstallationId());
 			parsePush.setMessage(jsonObject.toString());
 			parsePush.sendInBackground();
