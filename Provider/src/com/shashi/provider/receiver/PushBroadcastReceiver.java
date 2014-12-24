@@ -67,6 +67,8 @@ public class PushBroadcastReceiver extends ParsePushBroadcastReceiver {
 				database.setLocationToService(jsonObject
 						.getString("locationtoservice"));
 				database.setProviderAcceptedStatus("false");
+				database.setInstallationId(jsonObject
+						.getString("installationid"));
 				baseHelper.insert(database);
 				json = new JSONObject();
 				json.put("id", database.getId());
@@ -78,6 +80,7 @@ public class PushBroadcastReceiver extends ParsePushBroadcastReceiver {
 				json.put("customeracceptedstatus",
 						database.getCustomerAcceptedStatus());
 				json.put("requestid", database.getRequestId());
+				json.put("installationid", database.getInstallationId());
 				emptyIntent = new Intent(context, MainActivity.class);
 				title = "Customer Service Request";
 			} else {
@@ -88,6 +91,8 @@ public class PushBroadcastReceiver extends ParsePushBroadcastReceiver {
 				database.setTimeToService(jsonObject.getString("timetoservice"));
 				database.setLocationToService(jsonObject
 						.getString("locationtoservice"));
+				database.setInstallationId(jsonObject
+						.getString("installationid"));
 				baseHelper.updateCustomerStatus(database);
 				json = new JSONObject();
 				json.put("id", database.getId());
@@ -98,6 +103,7 @@ public class PushBroadcastReceiver extends ParsePushBroadcastReceiver {
 				json.put("customeracceptedstatus",
 						database.getCustomerAcceptedStatus());
 				json.put("requestid", database.getRequestId());
+				json.put("installationid", database.getInstallationId());
 				emptyIntent = new Intent(context, CustomerAccept.class);
 				title = "Customer Accepted Service";
 			}

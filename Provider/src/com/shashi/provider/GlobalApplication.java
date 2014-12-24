@@ -4,12 +4,14 @@ import android.app.Application;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.PushService;
 
 public class GlobalApplication extends Application {
 
 	public static boolean isAppOpend = false;
+	public static String installationId;
 
 	@Override
 	public void onCreate() {
@@ -22,6 +24,8 @@ public class GlobalApplication extends Application {
 		ParseACL defaultACL = new ParseACL();
 		defaultACL.setPublicReadAccess(true);
 		ParseACL.setDefaultACL(defaultACL, true);
-
+		ParseInstallation installation = ParseInstallation
+				.getCurrentInstallation();
+		installationId = installation.getInstallationId();
 	}
 }

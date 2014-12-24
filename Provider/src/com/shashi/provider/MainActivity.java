@@ -3,6 +3,9 @@ package com.shashi.provider;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -14,7 +17,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.shashi.provider.adapter.CustomerRequest;
 import com.shashi.provider.db.DataBaseHelper;
 import com.shashi.provider.db.ProviderDatabase;
@@ -89,6 +95,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 						.getLocationToService());
 				parseObject.add("customerid", list.get(i).getRequestId());
 				parseObject.saveInBackground();
+				sendPushNotification(list.get(i));
 			}
 		} else if (R.id.list == v.getId()) {
 			Intent intent = new Intent(this, CustomerAccept.class);
@@ -112,6 +119,28 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 			}
 		}
 
+	}
+
+	public void sendPushNotification(ProviderDatabase database) {
+		try {
+			ParsePush parsePush = new ParsePush();
+			ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
+			query.whereEqualTo("installationId", database.getInstallationId());
+			parsePush.setQuery(query);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("customername", database.getCustomerName());
+			jsonObject.put("timetoservice", database.getTimeToService());
+			jsonObject
+					.put("locationtoservice", database.getLocationToService());
+			jsonObject.put("requestid", database.getRequestId());
+			jsonObject.put("messagetype", "accept");
+			jsonObject.put("installationid", database.getInstallationId());
+			parsePush.setMessage(jsonObject.toString());
+			parsePush.sendInBackground();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

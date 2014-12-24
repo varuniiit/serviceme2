@@ -20,9 +20,19 @@ public class ProviderDatabase {
 	String customerAcceptedStatus;
 	@DatabaseField(canBeNull = true)
 	String requestId;
+	@DatabaseField(canBeNull = true)
+	String installationId;
 
 	public ProviderDatabase() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getInstallationId() {
+		return installationId;
+	}
+
+	public void setInstallationId(String installationId) {
+		this.installationId = installationId;
 	}
 
 	public int getId() {
