@@ -129,6 +129,21 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 		return list;
 	}
+	
+	public List<ProviderDatabase> getCustomerByRequestId(String requestId) {
+		RuntimeExceptionDao<ProviderDatabase, Integer> dao = getSimpleDataDao();
+		QueryBuilder<ProviderDatabase, Integer> queryBuilder = dao
+				.queryBuilder();
+		List<ProviderDatabase> list = new ArrayList<ProviderDatabase>();
+		try {
+			queryBuilder.where().eq("requestId", requestId);
+			list = queryBuilder.query();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 	public void updateProviderStatus(ProviderDatabase database) {
 		RuntimeExceptionDao<ProviderDatabase, Integer> dao = getSimpleDataDao();

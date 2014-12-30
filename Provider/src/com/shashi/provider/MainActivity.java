@@ -6,15 +6,20 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.parse.ParseInstallation;
@@ -48,6 +53,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 		listButton.setOnClickListener(this);
 		dataBaseHelper = new DataBaseHelper(this);
 		checkedStatus = new ArrayList<Integer>();
+		String name = getSharedPreferences("name", Context.MODE_PRIVATE)
+				.getString("customername", null);
+		if (name == null)
+			showDialog();
 	}
 
 	@Override
@@ -118,7 +127,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 				checkBox.setChecked(true);
 			}
 		}
-
 	}
 
 	public void sendPushNotification(ProviderDatabase database) {
@@ -131,13 +139,53 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 			jsonObject.put("providername", "Jhon");
 			jsonObject.put("requestid", database.getRequestId());
 			jsonObject.put("messagetype", "request");
-			jsonObject.put("installationid", database.getInstallationId());
+			jsonObject.put("installationid", GlobalApplication.installationId);
 			parsePush.setMessage(jsonObject.toString());
 			parsePush.sendInBackground();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void showDialog() {
+		LayoutInflater layoutInflater = LayoutInflater.from(this);
+		final View view = layoutInflater.inflate(R.layout.customer_name, null);
+		final EditText editText = (EditText) view.findViewById(R.id.editText1);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this)
+				.setTitle("Provider Name")
+				.setIcon(R.drawable.ic_launcher)
+				.setView(view)
+				.setPositiveButton("Okay",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								if (editText.getText().toString().trim()
+										.length() == 0) {
+									showDialog();
+								}
+								getSharedPreferences("name",
+										Context.MODE_PRIVATE)
+										.edit()
+										.putString("customername",
+												editText.getText().toString())
+										.commit();
+							}
+						})
+				.setNegativeButton("Exit",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								MainActivity.this.finish();
+							}
+						});
+		builder.create();
+		builder.setCancelable(false);
+		builder.show();
 	}
 
 }

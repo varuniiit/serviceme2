@@ -1,5 +1,7 @@
 package com.shashi.provider.receiver;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,7 +58,6 @@ public class PushBroadcastReceiver extends ParsePushBroadcastReceiver {
 		try {
 			jsonObject = new JSONObject(message);
 			DataBaseHelper baseHelper = new DataBaseHelper(context);
-			JSONObject json = null;
 			String title = null;
 			if (jsonObject.getString("messagetype").equalsIgnoreCase("request")) {
 				ProviderDatabase database = new ProviderDatabase();
@@ -70,63 +71,39 @@ public class PushBroadcastReceiver extends ParsePushBroadcastReceiver {
 				database.setInstallationId(jsonObject
 						.getString("installationid"));
 				baseHelper.insert(database);
-				json = new JSONObject();
-				json.put("id", database.getId());
-				json.put("customername", database.getCustomerName());
-				json.put("timetoservice", database.getTimeToService());
-				json.put("locationtoservice", database.getLocationToService());
-				json.put("provideracceptedstatus",
-						database.getProviderAcceptedStatus());
-				json.put("customeracceptedstatus",
-						database.getCustomerAcceptedStatus());
-				json.put("requestid", database.getRequestId());
-				json.put("installationid", database.getInstallationId());
 				emptyIntent = new Intent(context, MainActivity.class);
 				title = "Customer Service Request";
+				showNotification(title, jsonObject.getString("customername"),
+						jsonObject.getString("timetoservice"));
 			} else {
 				ProviderDatabase database = new ProviderDatabase();
 				database.setCustomerAcceptedStatus("true");
 				database.setRequestId(jsonObject.getString("requestid"));
-				database.setCustomerName(jsonObject.getString("customername"));
-				database.setTimeToService(jsonObject.getString("timetoservice"));
-				database.setLocationToService(jsonObject
-						.getString("locationtoservice"));
-				database.setInstallationId(jsonObject
-						.getString("installationid"));
 				baseHelper.updateCustomerStatus(database);
-				json = new JSONObject();
-				json.put("id", database.getId());
-				json.put("customername", database.getCustomerName());
-				json.put("timetoservice", database.getTimeToService());
-				json.put("locationtoservice", database.getLocationToService());
-				json.put("acceptedstatus", database.getProviderAcceptedStatus());
-				json.put("customeracceptedstatus",
-						database.getCustomerAcceptedStatus());
-				json.put("requestid", database.getRequestId());
-				json.put("installationid", database.getInstallationId());
+				List<ProviderDatabase> list = baseHelper
+						.getCustomerByRequestId(jsonObject
+								.getString("requestid"));
 				emptyIntent = new Intent(context, CustomerAccept.class);
 				title = "Customer Accepted Service";
+				showNotification(title, list.get(0).getCustomerName(),
+						"Confirmed");
 			}
-			emptyIntent.putExtra("data", json.toString());
-			showNotification(title);
+
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	public void showNotification(String title) throws JSONException {
+	public void showNotification(String title, String first, String last)
+			throws JSONException {
 
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 9,
 				emptyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				context)
-				.setSmallIcon(R.drawable.ic_launcher)
+				context).setSmallIcon(R.drawable.ic_launcher)
 				.setContentTitle(title)
-				.setContentText(
-						jsonObject.getString("customername") + ".\n"
-								+ jsonObject.getString("timetoservice") + ".")
+				.setContentText(first + ".\n" + last + ".")
 				.setContentIntent(pendingIntent);
 		mBuilder.setSound(RingtoneManager
 				.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
