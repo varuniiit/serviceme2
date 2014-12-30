@@ -26,13 +26,15 @@
             android:text="Select Location"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Button
+        <ImageButton
             android:id="@+id/map"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Map" />
+            android:layout_width="48dp"
+            android:layout_height="65dp"
+            android:layout_weight="1.97"
+            android:background="@android:color/transparent"
+            android:contentDescription="Map"
+            android:src="@drawable/googlemapsicon" />
+
     </LinearLayout>
 
     <TextView
@@ -48,13 +50,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Set Date Time" />
+        android:drawableRight="@drawable/datetime"
+        android:text="Date Time" />
 
     <Button
         android:id="@+id/submit"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:drawableRight="@drawable/circlenext"
         android:text="Submit" />
 
 </LinearLayout>
