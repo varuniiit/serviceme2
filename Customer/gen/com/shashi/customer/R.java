@@ -2057,7 +2057,7 @@ containing a value of this type.
         public static final int common_signin_btn_text_normal_light=0x7f02004a;
         public static final int common_signin_btn_text_pressed_dark=0x7f02004b;
         public static final int common_signin_btn_text_pressed_light=0x7f02004c;
-        public static final int ic_launcher=0x7f02004d;
+        public static final int ic_launche=0x7f02004d;
         public static final int ic_plusone_medium_off_client=0x7f02004e;
         public static final int ic_plusone_small_off_client=0x7f02004f;
         public static final int ic_plusone_standard_off_client=0x7f020050;
