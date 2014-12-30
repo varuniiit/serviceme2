@@ -1,13 +1,18 @@
 package com.shashi.customer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 import com.shashi.customer.adapter.ServiceListAdapter;
@@ -20,6 +25,8 @@ public class ServiceRequestList extends ActionBarActivity implements
 	ListView listView;
 	DataBaseHelper dataBaseHelper;
 	List<CustomerDatabase> list;
+	List<Integer> selectedItems = new ArrayList<Integer>();
+	boolean isClearClicked = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +35,68 @@ public class ServiceRequestList extends ActionBarActivity implements
 		listView = (ListView) findViewById(R.id.servicelist);
 		listView.setOnItemClickListener(this);
 		dataBaseHelper = new DataBaseHelper(this);
-		list = dataBaseHelper.getAllEntries();
-		listView.setAdapter(new ServiceListAdapter(this, dataBaseHelper, list));
+		updateListView();
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
-		Intent intent = new Intent(this, ProviderList.class);
-		intent.putExtra("requestid", list.get(position).getRequestId());
-		startActivity(intent);
+		if(!isClearClicked){
+			Intent intent = new Intent(this, ProviderList.class);
+			intent.putExtra("requestid", list.get(position).getRequestId());
+			startActivity(intent);
+		}else{
+			CheckedTextView checkedTextView = (CheckedTextView) arg1;
+			if (checkedTextView.isChecked()) {
+				checkedTextView.setChecked(true);
+				selectedItems.add((Integer) position);
+			} else {
+				checkedTextView.setChecked(false);
+				selectedItems.remove((Integer) position);
+			}
+		}
+		
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		getMenuInflater().inflate(R.menu.service_request_list, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		if (item.getTitle().toString().equals("Clear")) {
+			selectedItems.clear();
+			isClearClicked = true;
+			item.setTitle("Delete");
+			listView.setOnItemClickListener(this);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_list_item_checked);
+			for (CustomerDatabase provider : list) {
+				adapter.add(provider.getServiceList() + "\n"
+						+ provider.getTimeToService());
+			}
+			listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+			listView.setAdapter(adapter);
+			return true;
+		} else if (item.getTitle().toString().equals("Delete")) {
+			isClearClicked = false;
+			for (Integer i : selectedItems) {
+				dataBaseHelper.delete(list.get(i));
+			}
+			updateListView();
+			item.setTitle("Clear");
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void updateListView() {
+		// TODO Auto-generated method stub
+		list = dataBaseHelper.getAllEntries();
+		listView.setAdapter(new ServiceListAdapter(this, dataBaseHelper, list));
 	}
 }

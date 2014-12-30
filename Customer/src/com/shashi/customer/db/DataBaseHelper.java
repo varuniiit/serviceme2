@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
@@ -74,6 +75,18 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 			DemoORMLiteRuntimeDao = getRuntimeExceptionDao(CustomerDatabase.class);
 		}
 		return DemoORMLiteRuntimeDao;
+	}
+
+	public void delete(CustomerDatabase database) {
+		RuntimeExceptionDao<CustomerDatabase, Integer> dao = getSimpleDataDao();
+		DeleteBuilder<CustomerDatabase, Integer> deleteBuilder = dao
+				.deleteBuilder();
+		try {
+			deleteBuilder.where().eq("id", database.getId());
+			deleteBuilder.delete();
+		} catch (Exception e) {
+
+		}
 	}
 
 	private RuntimeExceptionDao<RequestIdRecent, Integer> getSimpleDataDaoReq() {
