@@ -42,6 +42,14 @@ public class MapActivity extends ActionBarActivity {
 			SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map);
 			googleMap = fragment.getMap();
+			if (googleMap == null) {
+				Toast.makeText(this,
+						"Google Play service is not supported in this device",
+						Toast.LENGTH_LONG).show();
+				MapActivity.finalLoc = null;
+				MapActivity.address = null;
+				finish();
+			}
 			googleMap.setMyLocationEnabled(true);
 			googleMap.setOnMyLocationChangeListener(myLocationChangeListener);
 			googleMap.setOnMapClickListener(mapClickListener);
