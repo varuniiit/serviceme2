@@ -5,16 +5,35 @@
     android:orientation="vertical"
     android:padding="15dp" >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:text="Service Type:"
+        android:textStyle="bold" />
+
     <Spinner
         android:id="@+id/dropdown"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="left" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:text="Location:"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center"
+        android:gravity="left"
         android:orientation="horizontal"
         android:weightSum="10" >
 
@@ -22,8 +41,9 @@
             android:id="@+id/locationtext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="8"
-            android:text="Select Location"
+            android:text="Address is:"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageButton
@@ -34,8 +54,16 @@
             android:background="@android:color/transparent"
             android:contentDescription="Map"
             android:src="@drawable/googlemapsicon" />
-
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:text="Date Time:"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/datetext"

@@ -1,10 +1,23 @@
 package com.shashi.customer;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -108,19 +121,18 @@ public class MapActivity extends ActionBarActivity {
 			Geocoder geocoder = new Geocoder(this);
 			List<Address> address = null;
 			try {
-				address = geocoder.getFromLocation(finalLoc.latitude,
-						finalLoc.longitude, 1);
-
-				if (address.size() >= 0) {
-					int adrressIndex = address.get(0).getMaxAddressLineIndex();
-					String addressString = "";
-					for (int i = 0; i < adrressIndex; i++) {
-						addressString += " " + address.get(0).getAddressLine(i);
-					}
-					MapActivity.address = addressString;
-					Toast.makeText(this, "Address: " + addressString,
-							Toast.LENGTH_LONG).show();
-				}
+				/*
+				 * address = geocoder.getFromLocation(finalLoc.latitude,
+				 * finalLoc.longitude, 1);
+				 * 
+				 * if (address.size() >= 0) { int adrressIndex =
+				 * address.get(0).getMaxAddressLineIndex(); String addressString
+				 * = ""; for (int i = 0; i < adrressIndex; i++) { addressString
+				 * += " " + address.get(0).getAddressLine(i); }
+				 * MapActivity.address = addressString; Toast.makeText(this,
+				 * "Address: " + addressString, Toast.LENGTH_LONG).show(); }
+				 */
+				new Background().execute();
 				finish();
 			} catch (Exception e) {
 				Toast.makeText(this,
@@ -134,6 +146,93 @@ public class MapActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public String getLocationCityName(double lat, double lon) {
+		JSONObject result = getLocationFormGoogle(lat + "," + lon);
+		return getCityAddress(result);
+	}
+
+	protected static JSONObject getLocationFormGoogle(String placesName) {
+
+		String apiRequest = "https://maps.googleapis.com/maps/api/geocode/json?latlng="
+				+ placesName; // + "&ka&sensor=false"
+		HttpGet httpGet = new HttpGet(apiRequest);
+		HttpClient client = new DefaultHttpClient();
+		HttpResponse response;
+		StringBuilder stringBuilder = new StringBuilder();
+
+		try {
+			response = client.execute(httpGet);
+			HttpEntity entity = response.getEntity();
+			InputStream stream = entity.getContent();
+			int b;
+			while ((b = stream.read()) != -1) {
+				stringBuilder.append((char) b);
+			}
+		} catch (ClientProtocolException e) {
+		} catch (IOException e) {
+		}
+
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject = new JSONObject(stringBuilder.toString());
+		} catch (JSONException e) {
+
+			e.printStackTrace();
+		}
+
+		return jsonObject;
+	}
+
+	protected String getCityAddress(JSONObject result) {
+		if (result.has("results")) {
+			try {
+				JSONArray array = result.getJSONArray("results");
+				if (array.length() > 0) {
+
+					JSONObject place = array.getJSONObject(1);
+					return place.getString("formatted_address");
+				}
+			} catch (JSONException e) {
+				Toast.makeText(MapActivity.this,
+						"Network problem. Please check network connection",
+						Toast.LENGTH_LONG).show();
+				MapActivity.finalLoc = null;
+				MapActivity.address = null;
+				e.printStackTrace();
+				finish();
+			}
+		}
+
+		return null;
+	}
+
+	private class Background extends AsyncTask<Void, Void, String> {
+
+		@Override
+		protected String doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			String addressDetail = getLocationCityName(finalLoc.latitude,
+					finalLoc.longitude);
+			return addressDetail;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			MapActivity.address = result;
+			Toast.makeText(MapActivity.this, "Address: " + result,
+					Toast.LENGTH_LONG).show();
+		}
+
 	}
 
 }

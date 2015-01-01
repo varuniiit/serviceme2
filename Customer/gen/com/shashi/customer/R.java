@@ -2082,12 +2082,12 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f09004a;
         public static final int action_mode_bar_stub=0x7f090049;
         public static final int action_mode_close_button=0x7f09003c;
-        public static final int action_settings=0x7f090074;
+        public static final int action_settings=0x7f090072;
         public static final int activity_chooser_view_content=0x7f09003d;
-        public static final int all_list=0x7f090072;
+        public static final int all_list=0x7f090070;
         public static final int always=0x7f09001d;
-        public static final int ampm_hitspace=0x7f09006d;
-        public static final int ampm_label=0x7f09006e;
+        public static final int ampm_hitspace=0x7f09006b;
+        public static final int ampm_label=0x7f09006c;
         public static final int animator=0x7f090010;
         public static final int beginning=0x7f090024;
         public static final int book_now=0x7f090034;
@@ -2095,7 +2095,7 @@ containing a value of this type.
         public static final int buyButton=0x7f090031;
         public static final int buy_now=0x7f090035;
         public static final int buy_with_google=0x7f090036;
-        public static final int center_view=0x7f090067;
+        public static final int center_view=0x7f090065;
         public static final int checkbox=0x7f090045;
         public static final int classic=0x7f090037;
         public static final int collapseActionView=0x7f09001e;
@@ -2112,9 +2112,9 @@ containing a value of this type.
         public static final int dialog=0x7f090022;
         public static final int disableHome=0x7f090016;
         public static final int done=0x7f090009;
-        public static final int done_button=0x7f090071;
+        public static final int done_button=0x7f09006f;
         public static final int dropdown=0x7f090023;
-        public static final int editText1=0x7f090063;
+        public static final int editText1=0x7f090061;
         public static final int edit_query=0x7f09004f;
         public static final int end=0x7f090025;
         public static final int expand_activities_button=0x7f09003e;
@@ -2124,31 +2124,30 @@ containing a value of this type.
         public static final int holo_light=0x7f09002d;
         public static final int home=0x7f090000;
         public static final int homeAsUp=0x7f090017;
-        public static final int hour_space=0x7f090068;
-        public static final int hours=0x7f09006a;
+        public static final int hour_space=0x7f090066;
+        public static final int hours=0x7f090068;
         public static final int hybrid=0x7f090029;
         public static final int icon=0x7f090042;
         public static final int ifRoom=0x7f09001f;
         public static final int image=0x7f09003f;
         public static final int listMode=0x7f090013;
         public static final int list_item=0x7f090041;
-        public static final int location_to=0x7f090065;
+        public static final int location_to=0x7f090063;
         public static final int locationtext=0x7f09005b;
         public static final int map=0x7f09005c;
         public static final int match_parent=0x7f090033;
         public static final int middle=0x7f090026;
-        public static final int minutes=0x7f09006c;
-        public static final int minutes_space=0x7f09006b;
+        public static final int minutes=0x7f09006a;
+        public static final int minutes_space=0x7f090069;
         public static final int monochrome=0x7f090039;
         public static final int month_text_view=0x7f090011;
         public static final int never=0x7f090020;
         public static final int none=0x7f090018;
         public static final int normal=0x7f090014;
-        public static final int okay=0x7f090073;
+        public static final int okay=0x7f090071;
         public static final int production=0x7f09002e;
         public static final int progress_circular=0x7f090007;
         public static final int progress_horizontal=0x7f090008;
-        public static final int providerlist=0x7f090061;
         public static final int providername=0x7f090060;
         public static final int radio=0x7f090047;
         public static final int sandbox=0x7f09002f;
@@ -2164,9 +2163,8 @@ containing a value of this type.
         public static final int search_src_text=0x7f090056;
         public static final int search_voice_btn=0x7f09005a;
         public static final int selectionDetails=0x7f090032;
-        public static final int separator=0x7f090069;
-        public static final int servicelist=0x7f090062;
-        public static final int servicename=0x7f090064;
+        public static final int separator=0x7f090067;
+        public static final int servicename=0x7f090062;
         public static final int shortcut=0x7f090046;
         public static final int showCustom=0x7f090019;
         public static final int showHome=0x7f09001a;
@@ -2177,9 +2175,9 @@ containing a value of this type.
         public static final int submit_area=0x7f090058;
         public static final int tabMode=0x7f090015;
         public static final int terrain=0x7f09002b;
-        public static final int time_picker=0x7f090070;
-        public static final int time_picker_dialog=0x7f09006f;
-        public static final int time_to=0x7f090066;
+        public static final int time_picker=0x7f09006e;
+        public static final int time_picker_dialog=0x7f09006d;
+        public static final int time_to=0x7f090064;
         public static final int title=0x7f090043;
         public static final int top=0x7f090028;
         public static final int up=0x7f090001;
@@ -2316,7 +2314,7 @@ containing a value of this type.
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000d;
         public static final int accept=0x7f0a002b;
-        public static final int action_settings=0x7f0a004e;
+        public static final int action_settings=0x7f0a004d;
         public static final int ampm_circle_radius_multiplier=0x7f0a0012;
         public static final int app_name=0x7f0a004c;
         public static final int circle_radius_multiplier=0x7f0a000f;
@@ -2431,7 +2429,6 @@ containing a value of this type.
          */
         public static final int deleted_key=0x7f0a0023;
         public static final int done_label=0x7f0a0019;
-        public static final int hello_world=0x7f0a004d;
         /** 
          Content description for the hour selector in the time picker, which displays
          selectable hours of the day along the inside edge of a circle, as in an analog clock.
@@ -2464,10 +2461,10 @@ containing a value of this type.
         public static final int text_size_multiplier_outer=0x7f0a0018;
         public static final int time_placeholder=0x7f0a0021;
         public static final int time_separator=0x7f0a0022;
-        public static final int title_activity_map=0x7f0a0051;
-        public static final int title_activity_provider_details=0x7f0a0050;
-        public static final int title_activity_provider_list=0x7f0a004f;
-        public static final int title_activity_service_request_list=0x7f0a0052;
+        public static final int title_activity_map=0x7f0a0050;
+        public static final int title_activity_provider_details=0x7f0a004f;
+        public static final int title_activity_provider_list=0x7f0a004e;
+        public static final int title_activity_service_request_list=0x7f0a0051;
         /**  Text on a placeholder buy button when Google Play services is not
          available or up-to-date 
          */

@@ -139,11 +139,13 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 			setupDateTimePicker();
 			datePickerDialog.show(getSupportFragmentManager(), DATEPICKER_TAG);
 		} else if (view.getId() == R.id.submit) {
-			/*
-			 * if (MapActivity.address == null || MapActivity.address.isEmpty())
-			 * { Toast.makeText(this, "Please select address first.",
-			 * Toast.LENGTH_LONG).show(); return; }
-			 */
+
+			if (MapActivity.address == null || MapActivity.address.isEmpty()) {
+				Toast.makeText(this, "Please select address first.",
+						Toast.LENGTH_LONG).show();
+				return;
+			}
+
 			if (this.date == null || this.date.isEmpty() || this.time == null
 					|| this.time.isEmpty()) {
 				Toast.makeText(this, "Please select date time first.",
@@ -167,9 +169,9 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 						"dd-MMM-yyyy hh:mm a", Locale.ENGLISH)
 						.format(dateTimeCalender.getTime()));
 				JSONObject object = new JSONObject();
-				object.put("address", /* MapActivity.address */"Bangalore");
-				object.put("long", /* MapActivity.finalLoc.longitude */123456);
-				object.put("lat", /* MapActivity.finalLoc.latitude */123456);
+				object.put("address", MapActivity.address);
+				object.put("long", MapActivity.finalLoc.longitude);
+				object.put("lat", MapActivity.finalLoc.latitude);
 				parseObject.add("locationtoservice", object.toString());
 				parseObject.add("installationid",
 						GlobalApplication.installationId);
@@ -252,4 +254,5 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 		startActivity(intent);
 		return true;
 	}
+
 }

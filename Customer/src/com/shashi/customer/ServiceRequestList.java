@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.shashi.customer.adapter.ServiceListAdapter;
 import com.shashi.customer.db.CustomerDatabase;
@@ -32,7 +33,9 @@ public class ServiceRequestList extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_service_request_list);
-		listView = (ListView) findViewById(R.id.servicelist);
+		listView = (ListView) findViewById(android.R.id.list);
+		TextView textView = (TextView) findViewById(android.R.id.empty);
+		listView.setEmptyView(textView);
 		listView.setOnItemClickListener(this);
 		dataBaseHelper = new DataBaseHelper(this);
 		updateListView();
@@ -41,11 +44,11 @@ public class ServiceRequestList extends ActionBarActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
-		if(!isClearClicked){
+		if (!isClearClicked) {
 			Intent intent = new Intent(this, ProviderList.class);
 			intent.putExtra("requestid", list.get(position).getRequestId());
 			startActivity(intent);
-		}else{
+		} else {
 			CheckedTextView checkedTextView = (CheckedTextView) arg1;
 			if (checkedTextView.isChecked()) {
 				checkedTextView.setChecked(true);
@@ -55,9 +58,9 @@ public class ServiceRequestList extends ActionBarActivity implements
 				selectedItems.remove((Integer) position);
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
