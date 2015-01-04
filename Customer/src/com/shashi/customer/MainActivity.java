@@ -1,16 +1,20 @@
 package com.shashi.customer;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -31,7 +35,9 @@ import android.widget.Toast;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
 import com.google.android.gms.maps.model.LatLng;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.shashi.customer.db.CustomerDatabase;
 import com.shashi.customer.db.DataBaseHelper;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
@@ -45,9 +51,9 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 	ImageButton map;
 	Button dateTime, submit;
 	TextView mapText, dateTimeText;
-	String[] items = { "Shop", "Hotel", "Rest", "Food" };
+	List<String> items = new ArrayList<String>();
 	LatLng location;
-	String serviceType = items[0];
+	String serviceType;
 	DatePickerDialog datePickerDialog;
 	TimePickerDialog timePickerDialog;
 	public static final String DATEPICKER_TAG = "datepicker";
@@ -69,13 +75,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 		spinner.setOnItemSelectedListener(this);
 		map.setOnClickListener(this);
 		dateTime.setOnClickListener(this);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_dropdown_item, items);
-		spinner.setAdapter(adapter);
-		String name = getSharedPreferences("name", Context.MODE_PRIVATE)
-				.getString("customername", null);
-		if (name == null)
-			showDialog();
+		new Background().execute();
 	}
 
 	private void showDialog() {
@@ -197,7 +197,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
-		serviceType = items[position];
+		serviceType = items.get(position);
 	}
 
 	@Override
@@ -255,4 +255,55 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 		return true;
 	}
 
+	private class Background extends AsyncTask<Void, Void, List<ParseObject>> {
+
+		@Override
+		protected List<ParseObject> doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("ServiceType");
+			query.whereExists("servicetype");
+			try {
+				List<ParseObject> list = query.find();
+				return list;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			dialog = new ProgressDialog(MainActivity.this);
+			dialog.setMessage("Loading...");
+			dialog.setCancelable(false);
+			dialog.show();
+		}
+
+		ProgressDialog dialog = null;
+
+		@Override
+		protected void onPostExecute(List<ParseObject> result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			dialog.dismiss();
+
+			for (ParseObject parseObject : result) {
+				items.add(parseObject.getString("servicetype"));
+			}
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+					MainActivity.this,
+					android.R.layout.simple_spinner_dropdown_item, items);
+			spinner.setAdapter(adapter);
+			if (!items.isEmpty()) {
+				serviceType = items.get(0);
+			}
+			String name = getSharedPreferences("name", Context.MODE_PRIVATE)
+					.getString("customername", null);
+			if (name == null)
+				showDialog();
+		}
+	}
 }

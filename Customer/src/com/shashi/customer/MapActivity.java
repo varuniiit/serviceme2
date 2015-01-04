@@ -2,7 +2,6 @@ package com.shashi.customer;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,8 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -118,22 +115,8 @@ public class MapActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.okay) {
 			finalLoc = tempLocation;
-			Geocoder geocoder = new Geocoder(this);
-			List<Address> address = null;
 			try {
-				/*
-				 * address = geocoder.getFromLocation(finalLoc.latitude,
-				 * finalLoc.longitude, 1);
-				 * 
-				 * if (address.size() >= 0) { int adrressIndex =
-				 * address.get(0).getMaxAddressLineIndex(); String addressString
-				 * = ""; for (int i = 0; i < adrressIndex; i++) { addressString
-				 * += " " + address.get(0).getAddressLine(i); }
-				 * MapActivity.address = addressString; Toast.makeText(this,
-				 * "Address: " + addressString, Toast.LENGTH_LONG).show(); }
-				 */
 				new Background().execute();
-				finish();
 			} catch (Exception e) {
 				Toast.makeText(this,
 						"Network problem. Please check network connection",
@@ -185,7 +168,7 @@ public class MapActivity extends ActionBarActivity {
 		return jsonObject;
 	}
 
-	protected String getCityAddress(JSONObject result) {
+	private String getCityAddress(JSONObject result) {
 		if (result.has("results")) {
 			try {
 				JSONArray array = result.getJSONArray("results");
@@ -231,6 +214,7 @@ public class MapActivity extends ActionBarActivity {
 			MapActivity.address = result;
 			Toast.makeText(MapActivity.this, "Address: " + result,
 					Toast.LENGTH_LONG).show();
+			MapActivity.this.finish();
 		}
 
 	}
