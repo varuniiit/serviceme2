@@ -2,38 +2,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
+    android:background="@drawable/backgroundServiceMe"
     android:orientation="vertical"
     android:padding="15dp" >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
-        android:text="Service Type:"
-        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/dropdown"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="left"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
-        android:text="Location:"
-        android:textStyle="bold" />
+        android:background="#ffffffff" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:background="#ffffffff"
         android:gravity="left"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:weightSum="10" >
 
@@ -42,51 +27,59 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="8"
-            android:text="Address is:"
+            android:layout_weight="10"
+            android:layout_marginLeft="5dp"
+            android:text="Location"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageButton
             android:id="@+id/map"
-            android:layout_width="48dp"
-            android:layout_height="65dp"
-            android:layout_weight="1.97"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:contentDescription="Map"
             android:src="@drawable/googlemapsicon" />
+
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
-        android:text="Date Time:"
-        android:textStyle="bold" />
+        android:background="#ffffffff"
+        android:gravity="left"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:weightSum="10" >
 
-    <TextView
-        android:id="@+id/datetext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Set Date and Time"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/datetext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="10"
+            android:layout_marginLeft="5dp"
+            android:text="Date and Time"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <Button
-        android:id="@+id/datetimepicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:drawableRight="@drawable/datetime"
-        android:text="Date Time" />
+        <ImageButton
+            android:id="@+id/datetimepicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="Map"
+            android:src="@drawable/datetime" />
+
+    </LinearLayout>
+
+    
 
     <Button
         android:id="@+id/submit"
-        android:layout_width="150dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:drawableRight="@drawable/circlenext"
+        android:background="#1170A7"
+        android:textColor="#ffffff"
         android:text="Submit" />
 
 </LinearLayout>

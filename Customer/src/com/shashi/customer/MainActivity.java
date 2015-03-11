@@ -122,7 +122,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 	protected void onResume() {
 		super.onResume();
 		if (MapActivity.address != null && !MapActivity.address.isEmpty()) {
-			mapText.setText("Address: " + MapActivity.address);
+			mapText.setText(MapActivity.address);
 		}
 		if (MapActivity.finalLoc != null) {
 			location = MapActivity.finalLoc;
