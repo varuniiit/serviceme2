@@ -49,7 +49,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 
 	Spinner spinner;
 	ImageButton map;
-	Button dateTime, submit;
+	Button submit;
+	ImageButton dateTime;
 	TextView mapText, dateTimeText;
 	List<String> items = new ArrayList<String>();
 	LatLng location;
@@ -67,7 +68,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener,
 		setContentView(R.layout.activity_main);
 		spinner = (Spinner) findViewById(R.id.dropdown);
 		map = (ImageButton) findViewById(R.id.map);
-		dateTime = (Button) findViewById(R.id.datetimepicker);
+		dateTime = (ImageButton) findViewById(R.id.datetimepicker);
 		mapText = (TextView) findViewById(R.id.locationtext);
 		dateTimeText = (TextView) findViewById(R.id.datetext);
 		submit = (Button) findViewById(R.id.submit);
